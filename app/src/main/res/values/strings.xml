@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">Final Final Project: TicTacToe(TicTacToe)</string>
+    <string name="app_name">TicTacToe(TicTacToe)</string>
     <string name="title_activity_win">WinActivity</string>
 </resources>
