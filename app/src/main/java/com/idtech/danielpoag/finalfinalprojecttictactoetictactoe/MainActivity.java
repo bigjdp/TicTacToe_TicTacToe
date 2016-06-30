@@ -11,7 +11,7 @@ import android.widget.ImageButton;
 public class MainActivity extends AppCompatActivity {
 
     public enum move{
-        PLAYERONE, PLAYERTWO, NONE
+        PLAYERONE, PLAYERTWO, BOTH, NONE
     }
 
     public static move currentPlayer = move.PLAYERONE;
@@ -63,18 +63,18 @@ public class MainActivity extends AppCompatActivity {
         }
 
         for (int i = 0; i < 3; i++){
-            if ((bigBoardState[i][0] == MainActivity.move.PLAYERONE && bigBoardState[i][1] == MainActivity.move.PLAYERONE && bigBoardState[i][2] == MainActivity.move.PLAYERONE) ||
-                    (bigBoardState[0][i] == MainActivity.move.PLAYERONE && bigBoardState[1][i] == MainActivity.move.PLAYERONE && bigBoardState[2][i] == MainActivity.move.PLAYERONE) ||
-                    (bigBoardState[0][0] == MainActivity.move.PLAYERONE && bigBoardState[1][1] == MainActivity.move.PLAYERONE && bigBoardState[2][2] == MainActivity.move.PLAYERONE) ||
-                    (bigBoardState[2][0] == MainActivity.move.PLAYERONE && bigBoardState[1][1] == MainActivity.move.PLAYERONE && bigBoardState[0][2] == MainActivity.move.PLAYERONE)){
+            if (((bigBoardState[i][0] == MainActivity.move.PLAYERONE || bigBoardState[i][0] == move.BOTH) && (bigBoardState[i][1] == MainActivity.move.PLAYERONE || bigBoardState[i][1] == move.BOTH) && (bigBoardState[i][2] == MainActivity.move.PLAYERONE || bigBoardState[i][2] == move.BOTH)) ||
+                    ((bigBoardState[0][i] == MainActivity.move.PLAYERONE || bigBoardState[0][i] == move.BOTH) && (bigBoardState[1][i] == MainActivity.move.PLAYERONE || bigBoardState[1][i] == move.BOTH) && (bigBoardState[2][i] == MainActivity.move.PLAYERONE || bigBoardState[2][i] == move.BOTH)) ||
+                    ((bigBoardState[0][0] == MainActivity.move.PLAYERONE || bigBoardState[0][0] == move.BOTH) && (bigBoardState[1][1] == MainActivity.move.PLAYERONE || bigBoardState[1][1] == move.BOTH) && (bigBoardState[2][2] == MainActivity.move.PLAYERONE || bigBoardState[2][2] == move.BOTH)) ||
+                    ((bigBoardState[2][0] == MainActivity.move.PLAYERONE || bigBoardState[2][0] == move.BOTH) && (bigBoardState[1][1] == MainActivity.move.PLAYERONE || bigBoardState[1][1] == move.BOTH) && (bigBoardState[0][2] == MainActivity.move.PLAYERONE || bigBoardState[0][2] == move.BOTH))){
                 winner = 1;
                 Intent intent = new Intent(this, WinActivity.class);
                 startActivity(intent);
             }
-            else if ((bigBoardState[i][0] == MainActivity.move.PLAYERTWO && bigBoardState[i][1] == MainActivity.move.PLAYERTWO && bigBoardState[i][2] == MainActivity.move.PLAYERTWO) ||
-                    (bigBoardState[0][i] == MainActivity.move.PLAYERTWO && bigBoardState[1][i] == MainActivity.move.PLAYERTWO && bigBoardState[2][i] == MainActivity.move.PLAYERTWO) ||
-                    (bigBoardState[0][0] == MainActivity.move.PLAYERTWO && bigBoardState[1][1] == MainActivity.move.PLAYERTWO && bigBoardState[2][2] == MainActivity.move.PLAYERTWO) ||
-                    (bigBoardState[2][0] == MainActivity.move.PLAYERTWO && bigBoardState[1][1] == MainActivity.move.PLAYERTWO && bigBoardState[0][2] == MainActivity.move.PLAYERTWO)){
+            else if (((bigBoardState[i][0] == MainActivity.move.PLAYERTWO || bigBoardState[i][0] == move.BOTH) && (bigBoardState[i][1] == MainActivity.move.PLAYERTWO || bigBoardState[i][1] == move.BOTH) && (bigBoardState[i][2] == MainActivity.move.PLAYERTWO || bigBoardState[i][2] == move.BOTH)) ||
+                    ((bigBoardState[0][i] == MainActivity.move.PLAYERTWO || bigBoardState[0][i] == move.BOTH) && (bigBoardState[1][i] == MainActivity.move.PLAYERTWO || bigBoardState[1][i] == move.BOTH) && (bigBoardState[2][i] == MainActivity.move.PLAYERTWO || bigBoardState[2][i] == move.BOTH)) ||
+                    ((bigBoardState[0][0] == MainActivity.move.PLAYERTWO || bigBoardState[0][0] == move.BOTH) && (bigBoardState[1][1] == MainActivity.move.PLAYERTWO || bigBoardState[1][1] == move.BOTH) && (bigBoardState[2][2] == MainActivity.move.PLAYERTWO || bigBoardState[2][2] == move.BOTH)) ||
+                    ((bigBoardState[2][0] == MainActivity.move.PLAYERTWO || bigBoardState[2][0] == move.BOTH) && (bigBoardState[1][1] == MainActivity.move.PLAYERTWO || bigBoardState[1][1] == move.BOTH) && (bigBoardState[0][2] == MainActivity.move.PLAYERTWO || bigBoardState[0][2] == move.BOTH))){
                 winner = 2;
                 Intent intent = new Intent(this, WinActivity.class);
                 startActivity(intent);

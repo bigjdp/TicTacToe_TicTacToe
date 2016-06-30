@@ -14,7 +14,8 @@
         android:layout_height="match_parent"
         android:collapseColumns="3"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
+        android:layout_alignParentEnd="true"
+        android:gravity="center_horizontal">
 
         <TableRow
             android:layout_width="match_parent"

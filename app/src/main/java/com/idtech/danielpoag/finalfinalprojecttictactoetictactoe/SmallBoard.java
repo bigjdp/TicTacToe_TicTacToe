@@ -33,6 +33,9 @@ public class SmallBoard {
                     MainActivity.bigBoardState[y][x] = MainActivity.move.PLAYERTWO;
 
                 }
+                if (boardState[0][0] != MainActivity.move.NONE && boardState[0][1] != MainActivity.move.NONE && boardState[0][2] != MainActivity.move.NONE && boardState[1][0] != MainActivity.move.NONE && boardState[1][1] != MainActivity.move.NONE && boardState[1][2] != MainActivity.move.NONE && boardState[2][0] != MainActivity.move.NONE && boardState[2][1] != MainActivity.move.NONE && boardState[2][2] != MainActivity.move.NONE && MainActivity.bigBoardState[y][x] == MainActivity.move.NONE){
+                    MainActivity.bigBoardState[y][x] = MainActivity.move.BOTH;
+                }
             }
         }
     }
