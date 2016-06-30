@@ -1,6 +1,8 @@
 package com.idtech.danielpoag.finalfinalprojecttictactoetictactoe;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -50,6 +52,12 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if (bigBoardState[y][x] == MainActivity.move.PLAYERTWO){
                     mainImageButton[y][x].setImageResource(R.drawable.osprite);
+                }
+                if (boardList[y][x] == SmallBoard.activeBoard){
+                    mainImageButton[y][x].getBackground().setColorFilter(0xFFFF0000, PorterDuff.Mode.MULTIPLY);
+                }
+                if (boardList[y][x] != SmallBoard.activeBoard){
+                    mainImageButton[y][x].getBackground().setColorFilter(Color.parseColor("#DBDAD8"), PorterDuff.Mode.MULTIPLY);
                 }
             }
         }
