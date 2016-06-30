@@ -16,15 +16,27 @@ public class MiniTableActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mini_table);
 
-        imageButton[0][0] = (ImageButton) findViewById(R.id.imageButton);
-        imageButton[0][1] = (ImageButton) findViewById(R.id.imageButton2);
-        imageButton[0][2] = (ImageButton) findViewById(R.id.imageButton3);
-        imageButton[1][0] = (ImageButton) findViewById(R.id.imageButton4);
-        imageButton[1][1] = (ImageButton) findViewById(R.id.imageButton5);
-        imageButton[1][2] = (ImageButton) findViewById(R.id.imageButton6);
-        imageButton[2][0] = (ImageButton) findViewById(R.id.imageButton7);
-        imageButton[2][1] = (ImageButton) findViewById(R.id.imageButton8);
-        imageButton[2][2] = (ImageButton) findViewById(R.id.imageButton9);
+        imageButton[0][0] = (ImageButton) findViewById(R.id.button);
+        imageButton[0][1] = (ImageButton) findViewById(R.id.button2);
+        imageButton[0][2] = (ImageButton) findViewById(R.id.button3);
+        imageButton[1][0] = (ImageButton) findViewById(R.id.button4);
+        imageButton[1][1] = (ImageButton) findViewById(R.id.button5);
+        imageButton[1][2] = (ImageButton) findViewById(R.id.button6);
+        imageButton[2][0] = (ImageButton) findViewById(R.id.button7);
+        imageButton[2][1] = (ImageButton) findViewById(R.id.button8);
+        imageButton[2][2] = (ImageButton) findViewById(R.id.button9);
+        System.out.println(SmallBoard.currentBoard.boardState[0][0] + "");
+
+        for (int y = 0; y < 3; y++){
+            for (int x = 0; x < 3; x++){
+                if (SmallBoard.currentBoard.boardState[y][x] == MainActivity.move.PLAYERONE){
+                    imageButton[y][x].setImageResource(R.drawable.xsprite);
+                }
+                if (SmallBoard.currentBoard.boardState[y][x] == MainActivity.move.PLAYERTWO){
+                    imageButton[y][x].setImageResource(R.drawable.osprite);
+                }
+            }
+        }
     }
 
     public void back(View view){
@@ -32,166 +44,204 @@ public class MiniTableActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void miniOneClicked(){
+    public void miniOneClicked(View view){
         if (SmallBoard.activeBoard == null){
             SmallBoard.activeBoard = SmallBoard.currentBoard;
+            System.out.println("Activeboard set");
         }
-        else if (MainActivity.currentPlayer == MainActivity.move.PLAYERONE && SmallBoard.activeBoard == SmallBoard.currentBoard){
-            imageButton[0][0].setImageResource(R.drawable.x);
+        if (MainActivity.currentPlayer == MainActivity.move.PLAYERONE && SmallBoard.activeBoard == SmallBoard.currentBoard && SmallBoard.currentBoard.boardState[0][0] == MainActivity.move.NONE){
+            imageButton[0][0].setImageResource(R.drawable.xsprite);
 
             SmallBoard.activeBoard = MainActivity.boardList[0][0];
             SmallBoard.currentBoard.boardState[0][0] = MainActivity.move.PLAYERONE;
-            SmallBoard.currentBoard.findWinner();
+            MainActivity.currentPlayer = MainActivity.move.PLAYERTWO;
+            //SmallBoard.currentBoard.findWinner();
         }
-        else if (MainActivity.currentPlayer == MainActivity.move.PLAYERTWO && SmallBoard.activeBoard == SmallBoard.currentBoard){
-            imageButton[0][0].setImageResource(R.drawable.y);
+        else if (MainActivity.currentPlayer == MainActivity.move.PLAYERTWO && SmallBoard.activeBoard == SmallBoard.currentBoard && SmallBoard.currentBoard.boardState[0][0] == MainActivity.move.NONE){
+            imageButton[0][0].setImageResource(R.drawable.osprite);
             SmallBoard.activeBoard = MainActivity.boardList[0][0];
             SmallBoard.currentBoard.boardState[0][0] = MainActivity.move.PLAYERTWO;
-            SmallBoard.currentBoard.findWinner();
+            MainActivity.currentPlayer = MainActivity.move.PLAYERONE;
+            //SmallBoard.currentBoard.findWinner();
         }
+        MainActivity.boardList[MainActivity.currentBoardY][MainActivity.currentBoardX] = SmallBoard.currentBoard;
+        System.out.println(SmallBoard.currentBoard.boardState[0][0] + "");
+        MainActivity.boardList[MainActivity.currentBoardY][MainActivity.currentBoardX].findWinner(MainActivity.currentBoardX, MainActivity.currentBoardY);
     }
 
-    public void miniTwoClicked(){
+    public void miniTwoClicked(View view){
         if (SmallBoard.activeBoard == null){
             SmallBoard.activeBoard = SmallBoard.currentBoard;
         }
-        else if (SmallBoard.currentBoard.boardState[0][1] == MainActivity.move.NONE && MainActivity.currentPlayer == MainActivity.move.PLAYERONE && SmallBoard.activeBoard == SmallBoard.currentBoard){
-            imageButton[0][1].setImageResource(R.drawable.x);
+        if (SmallBoard.currentBoard.boardState[0][1] == MainActivity.move.NONE && MainActivity.currentPlayer == MainActivity.move.PLAYERONE && SmallBoard.activeBoard == SmallBoard.currentBoard){
+            imageButton[0][1].setImageResource(R.drawable.xsprite);
             SmallBoard.activeBoard = MainActivity.boardList[0][1];
             SmallBoard.currentBoard.boardState[0][1] = MainActivity.move.PLAYERONE;
-            SmallBoard.currentBoard.findWinner();
+            MainActivity.currentPlayer = MainActivity.move.PLAYERTWO;
+            //SmallBoard.currentBoard.findWinner();
         }
         else if (SmallBoard.currentBoard.boardState[0][1] == MainActivity.move.NONE && MainActivity.currentPlayer == MainActivity.move.PLAYERTWO && SmallBoard.activeBoard == SmallBoard.currentBoard){
-            imageButton[0][1].setImageResource(R.drawable.y);
+            imageButton[0][1].setImageResource(R.drawable.osprite);
             SmallBoard.activeBoard = MainActivity.boardList[0][1];
             SmallBoard.currentBoard.boardState[0][1] = MainActivity.move.PLAYERTWO;
-            SmallBoard.currentBoard.findWinner();
+            MainActivity.currentPlayer = MainActivity.move.PLAYERONE;
+            //SmallBoard.currentBoard.findWinner();
         }
+        MainActivity.boardList[MainActivity.currentBoardY][MainActivity.currentBoardX] = SmallBoard.currentBoard;
+        MainActivity.boardList[MainActivity.currentBoardY][MainActivity.currentBoardX].findWinner(MainActivity.currentBoardX, MainActivity.currentBoardY);
     }
 
-    public void miniThreeClicked(){
+    public void miniThreeClicked(View view){
         if (SmallBoard.activeBoard == null){
             SmallBoard.activeBoard = SmallBoard.currentBoard;
         }
-        else if (SmallBoard.currentBoard.boardState[0][2] == MainActivity.move.NONE && MainActivity.currentPlayer == MainActivity.move.PLAYERONE && SmallBoard.activeBoard == SmallBoard.currentBoard){
-            imageButton[0][2].setImageResource(R.drawable.x);
+        if (SmallBoard.currentBoard.boardState[0][2] == MainActivity.move.NONE && MainActivity.currentPlayer == MainActivity.move.PLAYERONE && SmallBoard.activeBoard == SmallBoard.currentBoard){
+            imageButton[0][2].setImageResource(R.drawable.xsprite);
             SmallBoard.activeBoard = MainActivity.boardList[0][2];
             SmallBoard.currentBoard.boardState[0][2] = MainActivity.move.PLAYERONE;
-            SmallBoard.currentBoard.findWinner();
+            MainActivity.currentPlayer = MainActivity.move.PLAYERTWO;
+            //SmallBoard.currentBoard.findWinner();
         }
         else if (SmallBoard.currentBoard.boardState[0][2] == MainActivity.move.NONE && MainActivity.currentPlayer == MainActivity.move.PLAYERTWO && SmallBoard.activeBoard == SmallBoard.currentBoard){
-            imageButton[0][2].setImageResource(R.drawable.y);
+            imageButton[0][2].setImageResource(R.drawable.osprite);
             SmallBoard.activeBoard = MainActivity.boardList[0][2];
             SmallBoard.currentBoard.boardState[0][2] = MainActivity.move.PLAYERTWO;
-            SmallBoard.currentBoard.findWinner();
+            MainActivity.currentPlayer = MainActivity.move.PLAYERONE;
+            //SmallBoard.currentBoard.findWinner();
         }
+        MainActivity.boardList[MainActivity.currentBoardY][MainActivity.currentBoardX] = SmallBoard.currentBoard;
+        MainActivity.boardList[MainActivity.currentBoardY][MainActivity.currentBoardX].findWinner(MainActivity.currentBoardX, MainActivity.currentBoardY);
     }
 
-    public void miniFourClicked(){
+    public void miniFourClicked(View view){
         if (SmallBoard.activeBoard == null){
             SmallBoard.activeBoard = SmallBoard.currentBoard;
         }
-        else if (SmallBoard.currentBoard.boardState[1][0] == MainActivity.move.NONE && MainActivity.currentPlayer == MainActivity.move.PLAYERONE && SmallBoard.activeBoard == SmallBoard.currentBoard){
-            imageButton[1][0].setImageResource(R.drawable.x);
+        if (SmallBoard.currentBoard.boardState[1][0] == MainActivity.move.NONE && MainActivity.currentPlayer == MainActivity.move.PLAYERONE && SmallBoard.activeBoard == SmallBoard.currentBoard){
+            imageButton[1][0].setImageResource(R.drawable.xsprite);
             SmallBoard.activeBoard = MainActivity.boardList[1][0];
             SmallBoard.currentBoard.boardState[1][0] = MainActivity.move.PLAYERONE;
-            SmallBoard.currentBoard.findWinner();
+            MainActivity.currentPlayer = MainActivity.move.PLAYERTWO;
+            //SmallBoard.currentBoard.findWinner();
         }
         else if (SmallBoard.currentBoard.boardState[1][0] == MainActivity.move.NONE && MainActivity.currentPlayer == MainActivity.move.PLAYERTWO && SmallBoard.activeBoard == SmallBoard.currentBoard){
-            imageButton[1][0].setImageResource(R.drawable.y);
+            imageButton[1][0].setImageResource(R.drawable.osprite);
             SmallBoard.activeBoard = MainActivity.boardList[1][0];
             SmallBoard.currentBoard.boardState[1][0] = MainActivity.move.PLAYERTWO;
-            SmallBoard.currentBoard.findWinner();
+            MainActivity.currentPlayer = MainActivity.move.PLAYERONE;
+            //SmallBoard.currentBoard.findWinner();
         }
+        MainActivity.boardList[MainActivity.currentBoardY][MainActivity.currentBoardX] = SmallBoard.currentBoard;
+        MainActivity.boardList[MainActivity.currentBoardY][MainActivity.currentBoardX].findWinner(MainActivity.currentBoardX, MainActivity.currentBoardY);
     }
 
-    public void miniFiveClicked(){
+    public void miniFiveClicked(View view){
         if (SmallBoard.activeBoard == null){
             SmallBoard.activeBoard = SmallBoard.currentBoard;
         }
-        else if (SmallBoard.currentBoard.boardState[1][1] == MainActivity.move.NONE && MainActivity.currentPlayer == MainActivity.move.PLAYERONE && SmallBoard.activeBoard == SmallBoard.currentBoard){
-            imageButton[1][1].setImageResource(R.drawable.x);
+        if (SmallBoard.currentBoard.boardState[1][1] == MainActivity.move.NONE && MainActivity.currentPlayer == MainActivity.move.PLAYERONE && SmallBoard.activeBoard == SmallBoard.currentBoard){
+            imageButton[1][1].setImageResource(R.drawable.xsprite);
             SmallBoard.activeBoard = MainActivity.boardList[1][1];
             SmallBoard.currentBoard.boardState[1][1] = MainActivity.move.PLAYERONE;
-            SmallBoard.currentBoard.findWinner();
+            MainActivity.currentPlayer = MainActivity.move.PLAYERTWO;
+            //SmallBoard.currentBoard.findWinner();
         }
         else if (SmallBoard.currentBoard.boardState[1][1] == MainActivity.move.NONE && MainActivity.currentPlayer == MainActivity.move.PLAYERTWO && SmallBoard.activeBoard == SmallBoard.currentBoard){
-            imageButton[1][1].setImageResource(R.drawable.y);
+            imageButton[1][1].setImageResource(R.drawable.osprite);
             SmallBoard.activeBoard = MainActivity.boardList[1][1];
             SmallBoard.currentBoard.boardState[1][1] = MainActivity.move.PLAYERTWO;
-            SmallBoard.currentBoard.findWinner();
+            MainActivity.currentPlayer = MainActivity.move.PLAYERONE;
+            //SmallBoard.currentBoard.findWinner();
         }
+        MainActivity.boardList[MainActivity.currentBoardY][MainActivity.currentBoardX] = SmallBoard.currentBoard;
+        MainActivity.boardList[MainActivity.currentBoardY][MainActivity.currentBoardX].findWinner(MainActivity.currentBoardX, MainActivity.currentBoardY);
     }
 
-    public void miniSixClicked(){
+    public void miniSixClicked(View view){
         if (SmallBoard.activeBoard == null){
             SmallBoard.activeBoard = SmallBoard.currentBoard;
         }
-        else if (SmallBoard.currentBoard.boardState[1][2] == MainActivity.move.NONE && MainActivity.currentPlayer == MainActivity.move.PLAYERONE && SmallBoard.activeBoard == SmallBoard.currentBoard){
-            imageButton[1][2].setImageResource(R.drawable.x);
+        if (SmallBoard.currentBoard.boardState[1][2] == MainActivity.move.NONE && MainActivity.currentPlayer == MainActivity.move.PLAYERONE && SmallBoard.activeBoard == SmallBoard.currentBoard){
+            imageButton[1][2].setImageResource(R.drawable.xsprite);
             SmallBoard.activeBoard = MainActivity.boardList[1][2];
             SmallBoard.currentBoard.boardState[1][2] = MainActivity.move.PLAYERONE;
-            SmallBoard.currentBoard.findWinner();
+            MainActivity.currentPlayer = MainActivity.move.PLAYERTWO;
+            //SmallBoard.currentBoard.findWinner();
         }
         else if (SmallBoard.currentBoard.boardState[1][2] == MainActivity.move.NONE && MainActivity.currentPlayer == MainActivity.move.PLAYERTWO && SmallBoard.activeBoard == SmallBoard.currentBoard){
-            imageButton[1][2].setImageResource(R.drawable.y);
+            imageButton[1][2].setImageResource(R.drawable.osprite);
             SmallBoard.activeBoard = MainActivity.boardList[1][2];
             SmallBoard.currentBoard.boardState[1][2] = MainActivity.move.PLAYERTWO;
-            SmallBoard.currentBoard.findWinner();
+            MainActivity.currentPlayer = MainActivity.move.PLAYERONE;
+            //SmallBoard.currentBoard.findWinner();
         }
+        MainActivity.boardList[MainActivity.currentBoardY][MainActivity.currentBoardX] = SmallBoard.currentBoard;
+        MainActivity.boardList[MainActivity.currentBoardY][MainActivity.currentBoardX].findWinner(MainActivity.currentBoardX, MainActivity.currentBoardY);
     }
 
-    public void miniSevenClicked(){
+    public void miniSevenClicked(View view){
         if (SmallBoard.activeBoard == null){
             SmallBoard.activeBoard = SmallBoard.currentBoard;
         }
-        else if (SmallBoard.currentBoard.boardState[2][0] == MainActivity.move.NONE && MainActivity.currentPlayer == MainActivity.move.PLAYERONE && SmallBoard.activeBoard == SmallBoard.currentBoard){
-            imageButton[2][0].setImageResource(R.drawable.x);
+        if (SmallBoard.currentBoard.boardState[2][0] == MainActivity.move.NONE && MainActivity.currentPlayer == MainActivity.move.PLAYERONE && SmallBoard.activeBoard == SmallBoard.currentBoard){
+            imageButton[2][0].setImageResource(R.drawable.xsprite);
             SmallBoard.activeBoard = MainActivity.boardList[2][0];
             SmallBoard.currentBoard.boardState[2][0] = MainActivity.move.PLAYERONE;
-            SmallBoard.currentBoard.findWinner();
+            MainActivity.currentPlayer = MainActivity.move.PLAYERTWO;
+            //SmallBoard.currentBoard.findWinner();
         }
         else if (SmallBoard.currentBoard.boardState[2][0] == MainActivity.move.NONE && MainActivity.currentPlayer == MainActivity.move.PLAYERTWO && SmallBoard.activeBoard == SmallBoard.currentBoard){
-            imageButton[2][0].setImageResource(R.drawable.y);
+            imageButton[2][0].setImageResource(R.drawable.osprite);
             SmallBoard.activeBoard = MainActivity.boardList[2][0];
             SmallBoard.currentBoard.boardState[2][0] = MainActivity.move.PLAYERTWO;
-            SmallBoard.currentBoard.findWinner();
+            MainActivity.currentPlayer = MainActivity.move.PLAYERONE;
+            //SmallBoard.currentBoard.findWinner();
         }
+        MainActivity.boardList[MainActivity.currentBoardY][MainActivity.currentBoardX] = SmallBoard.currentBoard;
+        MainActivity.boardList[MainActivity.currentBoardY][MainActivity.currentBoardX].findWinner(MainActivity.currentBoardX, MainActivity.currentBoardY);
     }
 
-    public void miniEightClicked(){
+    public void miniEightClicked(View view){
         if (SmallBoard.activeBoard == null){
             SmallBoard.activeBoard = SmallBoard.currentBoard;
         }
-        else if (SmallBoard.currentBoard.boardState[2][1] == MainActivity.move.NONE && MainActivity.currentPlayer == MainActivity.move.PLAYERONE && SmallBoard.activeBoard == SmallBoard.currentBoard){
-            imageButton[2][1].setImageResource(R.drawable.x);
+        if (SmallBoard.currentBoard.boardState[2][1] == MainActivity.move.NONE && MainActivity.currentPlayer == MainActivity.move.PLAYERONE && SmallBoard.activeBoard == SmallBoard.currentBoard){
+            imageButton[2][1].setImageResource(R.drawable.xsprite);
             SmallBoard.activeBoard = MainActivity.boardList[2][1];
             SmallBoard.currentBoard.boardState[2][1] = MainActivity.move.PLAYERONE;
-            SmallBoard.currentBoard.findWinner();
+            MainActivity.currentPlayer = MainActivity.move.PLAYERTWO;
+            //SmallBoard.currentBoard.findWinner();
         }
         else if (SmallBoard.currentBoard.boardState[2][1] == MainActivity.move.NONE && MainActivity.currentPlayer == MainActivity.move.PLAYERTWO && SmallBoard.activeBoard == SmallBoard.currentBoard){
-            imageButton[2][1].setImageResource(R.drawable.y);
+            imageButton[2][1].setImageResource(R.drawable.osprite);
             SmallBoard.activeBoard = MainActivity.boardList[2][1];
             SmallBoard.currentBoard.boardState[2][1] = MainActivity.move.PLAYERTWO;
-            SmallBoard.currentBoard.findWinner();
+            MainActivity.currentPlayer = MainActivity.move.PLAYERONE;
+            //SmallBoard.currentBoard.findWinner();
         }
+        MainActivity.boardList[MainActivity.currentBoardY][MainActivity.currentBoardX] = SmallBoard.currentBoard;
+        MainActivity.boardList[MainActivity.currentBoardY][MainActivity.currentBoardX].findWinner(MainActivity.currentBoardX, MainActivity.currentBoardY);
     }
 
-    public void miniNineClicked(){
+    public void miniNineClicked(View view){
         if (SmallBoard.activeBoard == null){
             SmallBoard.activeBoard = SmallBoard.currentBoard;
         }
-        else if (SmallBoard.currentBoard.boardState[2][2] == MainActivity.move.NONE && MainActivity.currentPlayer == MainActivity.move.PLAYERONE && SmallBoard.activeBoard == SmallBoard.currentBoard){
-            imageButton[2][2].setImageResource(R.drawable.x);
+        if (SmallBoard.currentBoard.boardState[2][2] == MainActivity.move.NONE && MainActivity.currentPlayer == MainActivity.move.PLAYERONE && SmallBoard.activeBoard == SmallBoard.currentBoard){
+            imageButton[2][2].setImageResource(R.drawable.xsprite);
             SmallBoard.activeBoard = MainActivity.boardList[2][2];
             SmallBoard.currentBoard.boardState[2][2] = MainActivity.move.PLAYERONE;
-            SmallBoard.currentBoard.findWinner();
+            MainActivity.currentPlayer = MainActivity.move.PLAYERTWO;
+            //SmallBoard.currentBoard.findWinner();
         }
         else if (SmallBoard.currentBoard.boardState[2][2] == MainActivity.move.NONE && MainActivity.currentPlayer == MainActivity.move.PLAYERTWO && SmallBoard.activeBoard == SmallBoard.currentBoard){
-            imageButton[2][2].setImageResource(R.drawable.y);
+            imageButton[2][2].setImageResource(R.drawable.osprite);
             SmallBoard.activeBoard = MainActivity.boardList[2][2];
             SmallBoard.currentBoard.boardState[2][2] = MainActivity.move.PLAYERTWO;
-            SmallBoard.currentBoard.findWinner();
+            MainActivity.currentPlayer = MainActivity.move.PLAYERONE;
+            //SmallBoard.currentBoard.findWinner();
         }
+        MainActivity.boardList[MainActivity.currentBoardY][MainActivity.currentBoardX] = SmallBoard.currentBoard;
+        MainActivity.boardList[MainActivity.currentBoardY][MainActivity.currentBoardX].findWinner(MainActivity.currentBoardX, MainActivity.currentBoardY);
     }
 }
